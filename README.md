@@ -1,4 +1,4 @@
-javase8
+Java SE 8 Introduction
 =======
 
-java se 8 Introduction
+Java SE 8 Introduction
