@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Java SE 8 Introduction</title>
+    <link rel="stylesheet" href="styles/styles.css"/>
+  </head>
+  <body>
+    <article>
+      <section>
+        <h1>Java SE 8 Introduction</h1>
+      </section>
+      <section>
+        <h2>Target</h2>
+        <ul>
+          <li></li>
+          <li>Funcational</li>
+          <li>None for(int i=0; i++; i< array.size())</li>
+          <li>Lambda</li>
+          <li>Stream</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Java versions</h2>
+        <ul>
+          <li></li>
+          <li><a href="http://www.oracle.com/technetwork/java/javase/8train-relnotes-latest-2153846.html">JDK 8 Release Notes</a></li>
+          <li><a href="http://www.oracle.com/technetwork/java/javase/8-whats-new-2157071.html">What's New in JDK 8</a></li>
+        </ul>
+      </section>
+      <section>
+        <h2>New features</h2>
+        <ul>
+          <li></li>
+          <li>Lambda Expressions</li>
+          <li>Method references</li>
+          <li>Default methods</li>
+          <li>Repeating Annotations</li>
+          <li>Stream</li>
+          <li>Nashorn Javascript Engine</li>
+          <li>Parallel Array Sorting</li>
+          <li>Standard Encoding and Decoding Base64</li>
+          <li>Concurrency</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Why lambda</h2>
+        <ul>
+          <li></li>
+          <li>Parallelism</li>
+          <li>Asynchronous</li>
+          <li>Cool</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Lambda</h2>
+        <hr>
+        <pre><code class="language-java">ActionListener al = new ActionListener() {
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        showMessageDialog(f, "你好);
+    }
+};
+
+</code></pre>
+      </section>
+      <section>
+        <h2>Lambda</h2>
+        <hr>
+        <pre><code class="language-java">ActionListener al =
+            e -> showMessageDialog(frame, "你好");
+            
+            
+            </code></pre>
+      </section>
+      <section>
+        <h2>Funcational Interface</h2>
+        <ul>
+          <li></li>
+          <li>Interfaces contains only one abstract method</li>
+          <li>@FuncationalInterface</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Funcational Interface</h2>
+        <pre><code class="language-java">public void printPersons(List<Person> roster,
+    CheckPerson tester) {
+          ...
+}
+
+// interface
+interface CheckPerson {
+    boolean test(Person p);
+}
+</code></pre>
+      </section>
+      <section>
+        <h2>Funcational Interface</h2>
+        <pre><code class="language-java">// anonymous class
+printPersons(
+    roster,
+    new CheckPerson() {
+        public boolean test(Person p) {
+            return p.getGender() == Person.Sex.MALE
+                && p.getAge() >= 18
+                && p.getAge() <= 25;
+        }
+    }
+);
+</code></pre>
+      </section>
+      <section>
+        <h2>Funcational Interface</h2>
+        <pre><code class="language-java">printPersons(
+    roster,
+    (Person p) -> p.getGender() == Person.Sex.MALE
+        && p.getAge() >= 18
+        && p.getAge() <= 25
+);</code></pre><strong><a href="http://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html">lambda expressions tutorial</a></strong>
+      </section>
+      <section>
+        <h2>Lambda</h2>
+        <pre><code class="language-java">public static void processPersons(
+    List<Person> roster,
+    Predicate<Person> tester,
+    Consumer<Person> block) {
+        for (Person p : roster) {
+            if (tester.test(p)) {
+                block.accept(p);
+            }
+        }
+}
+</code></pre>
+      </section>
+      <section>
+        <h2>Lambda</h2>
+        <pre><code class="language-java">processPersonsWithFunction(
+    roster,
+    p -> p.getGender() == Person.Sex.MALE
+        && p.getAge() >= 18
+        && p.getAge() <= 25,
+    p -> p.getEmailAddress(),
+    email -> System.out.println(email)
+);
+
+</code></pre>
+      </section>
+      <section>
+        <h2>Lambda syntax</h2>
+        <pre><code class="language-java">() -> System.out.println("hehe")
+
+x -> System.out.println("hehe " + x)
+
+(a, b) -> a + b
+
+(int x, int y) -> {
+    return x + y;
+}
+
+</code></pre>
+      </section>
+      <section>
+        <h2>Lambda Variables Scope</h2>
+        <ul>
+          <li></li>
+          <li>have the same access to local variables of the enclosing scope</li>
+          <li>do not have any shadowing issues/ no new level of scoping</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Lambda</h2>
+        <ul>
+          <li></li>
+          <li>not directly support by JVM, processed as Class's instances</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Method reference</h2>
+        <ul>
+          <li></li>
+          <li>instance::method (with only one parameter)</li>
+          <li>Class::method
+            <ul>
+              <li></li>
+              <li>static method with only one parameter</li>
+              <li>instance mehtod without parameter</li>
+            </ul>
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Default Method</h2>
+        <p>also</p>
+        <ul>
+          <li></li>
+          <li>virtual extension methods</li>
+          <li>Defender method</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Generalized Target-Type Inference</h2>
+      </section>
+      <section>
+        <h2>Stream API</h2>
+        <ul>
+          <li></li>
+          <li>java.util.stream</li>
+          <li>Stream pipeline</li>
+          <li>A sequence of elements supporting sequential and parallel aggregate operations</li>
+          <li>Most stream operations accept parameters that describe user-specified behavior</li>
+          <ul>
+            <li></li>
+            <li>instances of a functional interface such as Function</li>
+            <li>lambda expressions</li>
+            <li>method references</li>
+          </ul>
+        </ul>
+      </section>
+      <section>
+        <h2>Ruby/Rails</h2>
+        <pre class="bullet"><code class="language-ruby"># Ruby
+[1,2,3,4].reduce(:+) # => 10
+
+Product.where("type = 0").limit(100).order("price")
+</code></pre>
+        <pre class="bullet"><code class="language-java">// Java
+Integer sum = integers.reduce(0, Integer::sum);
+
+</code></pre>
+      </section>
+      <section>
+        <h2>Stream API</h2>
+        <pre><code class="language-java">List<String> girlStudyBugs = students.stream()
+    .filter(f -> f.getGender().equals("F"))
+    .filter(f -> f.getScore() > 80)
+    .sorted(Comparator.comparingInt(Student::getScore))
+    .map(Student::getName)
+    .collect(Collectors.toList());
+    </code></pre>
+      </section>
+      <section>
+        <h2>Stream Operations</h2>
+        <ul>
+          <li></li>
+          <li>Source(Arrays,Collections, IO channel)</li>
+          <li>Intermediate Operations(All intermediate operations are lazy)</li>
+          <li>Terminal Operation</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Stream Source</h2>
+        <ul>
+          <li></li>
+          <li>Stream&lt;T&gt;</li>
+          <li>IntStream, LongStream, DoubleStream</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Create Stream</h2>
+        <ul>
+          <li></li>
+          <li>Collection#stream</li>
+          <li>Arrays#stream</li>
+          <li>Stream#of</li>
+          <li>BufferReader#lines</li>
+          <li>IntStream#range</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Intermediate Operations</h2>
+        <ul>
+          <li></li>
+          <li>filter</li>
+          <li>map, flatMap</li>
+          <li>sorted</li>
+          <li>limit, skip</li>
+          <li>distinct</li>
+          <li>peek</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Terminal Operation</h2>
+        <ul>
+          <li></li>
+          <li>collect, reduce</li>
+          <li>min, max, average, sum, count</li>
+          <li>findFirst, findAny</li>
+          <li>allMatch, anyMatch, noneMatch</li>
+          <li>forEach, forEachOrdered</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Sequential/Parallel Stream</h2>
+      </section>
+      <section>
+        <h2>Optional Class</h2>
+      </section>
+    </article>
+    <script src="scripts/scripts.js"></script>
+  </body>
+</html>
