@@ -20,6 +20,8 @@ html
 
       section
         h1 Java SE 8 Introduction
+        p bin liu
+        p Credit: <a href="http://overwater.poco.cn">http://overwater.poco.cn</a>
 
       section
         h2 Target
@@ -313,7 +315,185 @@ html
         h2 Sequential/Parallel Stream
 
       section
-        h2 Optional Class
+        h2 java.util.function
+        ul
+          li Interfaces
+          ul
+            li Function/BiFunction
+            li Supplier
+            li Predicate
+            li Consumer
+            li Int|Double|Long
+          li Classes
+          ul
+            li Functions
+            li Predicates
+      section
+        h2 java.util.function.BiFunction
+        pre
+          code.language-java.
+            BiFunction<String, String, String> 
+              join = (s, String t) -> s + t;
+
+      section
+        h2 java.util.function.Function
+        ul
+          li R apply(T t)
+          li <V> Function<T,V> compose(Function<? super R,? extends V> after)
+
+        pre.bullet
+          code.language-java.
+            public void modifyTheValue(int value,
+              Function<Integer, Integer> function){
+                int newValue = function.apply(value);
+            }
+            Function<Integer, Integer> testFunction = intVal -> {
+              return intVal * 10;
+            };
+
+            myNumber = 15;
+            modifyTheValue(myNumber, val-> val * 10);
+            int x = testFunction.apply(myNumber);
+
+      section
+        h2 java.util.function.Supplier
+        ul
+          li A supplier of objects
+          li T get()
+
+
+      section
+        h2 java.util.function.Predicate
+        ul
+          li Determines if the input object matches some criteria
+          li boolean test(T t)
+          li Predicate<T> and(Predicate<? super T> p)
+          li Predicate<T> negate()
+          li Predicate<T> or(Predicate<? super T> p)
+          li Predicate<T> xor(Predicate<? super T> p)
+
+
+      section
+        h2 java.util.function.Consumer
+        ul
+          li Accepts a single input argument and returns no result
+          li void accept(T t)
+          li Consumer<T> chain(Consumer<? super T> other)
+
+      section
+        pre
+          code.language-java.
+            public void test(Supplier<Student> supplier,
+              Predicate<Student> predicate,
+              Consumer<Student> consumer) {
+                if (predicate.test(s)) {
+                  consumer.accept(supplier.get());
+                }else {
+                };
+            }
+ 
+            Consumer<Student> consumer = student -> {
+                    System.out.println("Student Consumer: ");
+                    System.out.println(student);
+                };
+
+            Predicate<Student> predicate = student -> 
+                      student.getGender() == Person.Sex.MALE;
+
+            Supplier<Student> supplier = () -> { 
+              return new Student("first", "last", Person.Sex.MALE, 25);
+            };
+
+            test(supplier, consumer, predicate);
+
+      section
+        h2 Optional<T> Class
+        ul
+          li not in java.util.function
+          li but in java.util
+          li no if (x != null)
+          li no NullPointerException
+
+      section
+        h2 Optional<T> Class
+        ul
+          li Optional.of()
+          li Optional.empty()
+          li all static methods
+
+        pre.bullet
+          code.language-java.
+            Optional<String> name = Optional.of("zhangsan");
+            Optional empty = Optional.empty();
+
+      section
+        h2 Optional<T> Class
+        ul
+          li Optional.isPresent
+          li Optional.get
+
+        pre.bullet
+          code.language-java.
+            try {
+              if (name.isPresent()) {
+                System.out.println(name.get());
+              }
+            } catch (NoSuchElementException ex) {
+              System.out.println(ex.getMessage());
+            }
+ 
+      section
+        h2 Optional<T> Class
+        ul
+          li Optional.ifPresent(Consumer<? super T> consumer)
+
+        pre.bullet
+          code.language-java.
+            name.ifPresent((value) -> {
+              System.out.println("Stuent name is : " + value);
+            });
+
+      section
+        h2 Optional<T> Class
+        ul
+          li Optional.orElse
+          li Optional.orElseGet(Supplier<T> other)
+
+        pre.bullet
+          code.language-java.
+            empty.orElse("There is no value present!");
+            name.orElse("There is some value!");
+
+        pre.bullet
+          code.language-java.
+            empty.orElseGet(() -> "Default Value");
+            name.orElseGet(() -> "Default Value");
+
+
+      section
+        h2 Optional<T> Class
+        ul
+          li Optional.orElseThrow(Supplier<V> exceptionFactory)
+
+        pre.bullet
+          code.language-java.
+            class ValueAbsentException extends Throwable {
+              ... ...
+            }
+            try {
+              empty.orElseThrow(ValueAbsentException::new);
+            } catch (Throwable ex) {
+              ... ...
+            }
+
+      section
+        h2 Optional<T> Class
+        ul
+          li OptionalDouble
+          li OptionalInt
+          li OptionalLong
+
+
 
 
 
