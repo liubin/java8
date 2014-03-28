@@ -92,6 +92,7 @@ html
           li
           li Interfaces contains only one abstract method
           li @FuncationalInterface
+          li Lambda is not a "Value" but a "Funcational Interface"
 
       section
         h2 Funcational Interface
@@ -189,6 +190,47 @@ html
           li
           li have the same access to local variables of the enclosing scope
           li do not have any shadowing issues/ no new level of scoping
+
+      section
+        h2 Lambda: return action
+        p return in lambda expression
+        pre.bullet
+          code.language-java.
+            List<String> strs = Arrays.asList("a", "b", "c", "d");
+            strs.forEach(s -> {
+              if(s.equals("c")) return;
+                System.out.println(s);
+            });
+            // output
+            // a
+            // b
+            // d
+
+      section
+        h2 Lambda: this
+        pre.bullet
+          code.language-java.
+            public class Sample {
+                public void hoge(){
+                    new Runnable(){
+                        @Override
+                        public void run() {
+                            System.out.println(this.getClass());
+                        }
+                    }.run();
+                    ((Runnable)() ->  System.out.println(this.getClass())).run();
+                }
+            }
+        ul
+          li Sample$1
+          li Sample
+
+      section
+        h2 Lambda: final variables
+        ul
+          li no final keyword needed
+          li assignment when declared
+          li can't reassign
 
       section
         h2 Lambda
