@@ -228,6 +228,7 @@ html
       section
         h2 Lambda: final variables
         ul
+          li
           li no final keyword needed
           li assignment when declared
           li can't reassign
@@ -269,6 +270,7 @@ html
         ul
           li
           li java.util.stream
+          li A stream is a sequence of elements
           li Stream pipeline
           li A sequence of elements supporting sequential and parallel aggregate operations
           li Most stream operations accept parameters that describe user-specified behavior
@@ -347,11 +349,50 @@ html
         h2 Terminal Operation
         ul
           li
+          li produces a non-stream result(primitive value/ collections/ no value at all)
           li collect, reduce
           li min, max, average, sum, count
           li findFirst, findAny
           li allMatch, anyMatch, noneMatch
           li forEach, forEachOrdered
+
+      section
+        h2 Stream.reduce
+        ul
+          li
+          li general-purpose reduction operation
+          li T reduce(T identity, BinaryOperator<T> accumulator)
+          li always returns a new value
+          pre
+            code.language-java.
+              T result = identity;
+              for (T element : this stream)
+                result = accumulator.apply(result, element)
+              return result;
+
+      section
+        h2 Stream.reduce
+        ul
+          li
+        pre
+          code.language-java.
+            Integer totalAge = roster
+                .stream()
+                .mapToInt(Person::getAge)
+                .sum();
+
+            Integer totalAgeReduce = roster
+               .stream()
+               .map(Person::getAge)
+               .reduce(
+                   0,
+                   (a, b) -> a + b);
+
+      section
+        h2 Stream.reduce
+        ul
+          li
+          li 
 
       section
         h2 Sequential/Parallel Stream
@@ -361,15 +402,13 @@ html
         ul
           li Interfaces
           ul
+            li
             li Function/BiFunction
             li Supplier
             li Predicate
             li Consumer
             li Int|Double|Long
-          li Classes
-          ul
-            li Functions
-            li Predicates
+
       section
         h2 java.util.function.BiFunction
         pre
@@ -380,6 +419,7 @@ html
       section
         h2 java.util.function.Function
         ul
+          li
           li R apply(T t)
           li <V> Function<T,V> compose(Function<? super R,? extends V> after)
 
@@ -400,6 +440,7 @@ html
       section
         h2 java.util.function.Supplier
         ul
+          li
           li A supplier of objects
           li T get()
 
@@ -407,6 +448,7 @@ html
       section
         h2 java.util.function.Predicate
         ul
+          li
           li Determines if the input object matches some criteria
           li boolean test(T t)
           li Predicate<T> and(Predicate<? super T> p)
@@ -418,6 +460,7 @@ html
       section
         h2 java.util.function.Consumer
         ul
+          li
           li Accepts a single input argument and returns no result
           li void accept(T t)
           li Consumer<T> chain(Consumer<? super T> other)
@@ -451,6 +494,7 @@ html
       section
         h2 Optional<T> Class
         ul
+          li
           li not in java.util.function
           li but in java.util
           li no if (x != null)
@@ -459,6 +503,7 @@ html
       section
         h2 Optional<T> Class
         ul
+          li
           li Optional.of()
           li Optional.empty()
           li all static methods
@@ -471,6 +516,7 @@ html
       section
         h2 Optional<T> Class
         ul
+          li
           li Optional.isPresent
           li Optional.get
 
@@ -487,6 +533,7 @@ html
       section
         h2 Optional<T> Class
         ul
+          li
           li Optional.ifPresent(Consumer<? super T> consumer)
 
         pre.bullet
@@ -498,6 +545,7 @@ html
       section
         h2 Optional<T> Class
         ul
+          li
           li Optional.orElse
           li Optional.orElseGet(Supplier<T> other)
 
@@ -515,6 +563,7 @@ html
       section
         h2 Optional<T> Class
         ul
+          li
           li Optional.orElseThrow(Supplier<V> exceptionFactory)
 
         pre.bullet
@@ -531,6 +580,7 @@ html
       section
         h2 Optional<T> Class
         ul
+          li
           li OptionalDouble
           li OptionalInt
           li OptionalLong
