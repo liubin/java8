@@ -513,6 +513,9 @@ html
             Optional<String> name = Optional.of("zhangsan");
             Optional empty = Optional.empty();
 
+            System.out.println(empty.get());
+            // java.util.NoSuchElementException
+
       section
         h2 Optional<T> Class
         ul
@@ -585,6 +588,26 @@ html
           li OptionalInt
           li OptionalLong
 
+      section
+        h1 Insufficiency
+        ul
+          li
+          li No pattern match
+          li
+
+      section
+        h2 pattern match example
+          ul
+            li
+              a(href='http://d.hatena.ne.jp/nowokay/20131212#1386820115')='Java SE 8でパターンマッチを実装する'
+            li Class match, case class math, list match
+
+      section
+        h1 references
+        ul
+          li
+          li
+            a(href='http://d.hatena.ne.jp/nowokay/20131231/1388478043')= '2013年まとめ：今年はJava8の年だった'
 
 
 
