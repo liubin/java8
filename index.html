@@ -10,6 +10,8 @@
     <article>
       <section>
         <h1>Java SE 8 Introduction</h1>
+        <p>bin liu</p>
+        <p>Credit: <a href="http://overwater.poco.cn">http://overwater.poco.cn</a></p>
       </section>
       <section>
         <h2>Target</h2>
@@ -81,6 +83,7 @@
           <li></li>
           <li>Interfaces contains only one abstract method</li>
           <li>@FuncationalInterface</li>
+          <li>Lambda is not a "Value" but a "Funcational Interface"</li>
         </ul>
       </section>
       <section>
@@ -170,6 +173,47 @@ x -> System.out.println("hehe " + x)
         </ul>
       </section>
       <section>
+        <h2>Lambda: return action</h2>
+        <p>return in lambda expression</p>
+        <pre class="bullet"><code class="language-java">List<String> strs = Arrays.asList("a", "b", "c", "d");
+strs.forEach(s -> {
+  if(s.equals("c")) return;
+    System.out.println(s);
+});
+// output
+// a
+// b
+// d
+</code></pre>
+      </section>
+      <section>
+        <h2>Lambda: this</h2>
+        <pre class="bullet"><code class="language-java">public class Sample {
+    public void hoge(){
+        new Runnable(){
+            @Override
+            public void run() {
+                System.out.println(this.getClass());
+            }
+        }.run();
+        ((Runnable)() ->  System.out.println(this.getClass())).run();
+    }
+}</code></pre>
+        <ul>
+          <li>Sample$1</li>
+          <li>Sample</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Lambda: final variables</h2>
+        <ul>
+          <li></li>
+          <li>no final keyword needed</li>
+          <li>assignment when declared</li>
+          <li>can't reassign</li>
+        </ul>
+      </section>
+      <section>
         <h2>Lambda</h2>
         <ul>
           <li></li>
@@ -207,6 +251,7 @@ x -> System.out.println("hehe " + x)
         <ul>
           <li></li>
           <li>java.util.stream</li>
+          <li>A stream is a sequence of elements</li>
           <li>Stream pipeline</li>
           <li>A sequence of elements supporting sequential and parallel aggregate operations</li>
           <li>Most stream operations accept parameters that describe user-specified behavior</li>
@@ -284,6 +329,7 @@ Integer sum = integers.reduce(0, Integer::sum);
         <h2>Terminal Operation</h2>
         <ul>
           <li></li>
+          <li>produces a non-stream result(primitive value/ collections/ no value at all)</li>
           <li>collect, reduce</li>
           <li>min, max, average, sum, count</li>
           <li>findFirst, findAny</li>
@@ -292,10 +338,255 @@ Integer sum = integers.reduce(0, Integer::sum);
         </ul>
       </section>
       <section>
+        <h2>Stream.reduce</h2>
+        <ul>
+          <li></li>
+          <li>general-purpose reduction operation</li>
+          <li>T reduce(T identity, BinaryOperator<T> accumulator)</li>
+          <li>always returns a new value</li>
+          <pre><code class="language-java">T result = identity;
+for (T element : this stream)
+  result = accumulator.apply(result, element)
+return result;
+</code></pre>
+        </ul>
+      </section>
+      <section>
+        <h2>Stream.reduce</h2>
+        <ul>
+          <li></li>
+        </ul>
+        <pre><code class="language-java">Integer totalAge = roster
+    .stream()
+    .mapToInt(Person::getAge)
+    .sum();
+    
+Integer totalAgeReduce = roster
+   .stream()
+   .map(Person::getAge)
+   .reduce(
+       0,
+       (a, b) -> a + b);
+       </code></pre>
+      </section>
+      <section>
+        <h2>Stream.reduce</h2>
+        <ul>
+          <li></li>
+          <li></li>
+        </ul>
+      </section>
+      <section>
         <h2>Sequential/Parallel Stream</h2>
       </section>
       <section>
-        <h2>Optional Class</h2>
+        <h2>java.util.function</h2>
+        <ul>
+          <li>Interfaces</li>
+          <ul>
+            <li></li>
+            <li>Function/BiFunction</li>
+            <li>Supplier</li>
+            <li>Predicate</li>
+            <li>Consumer</li>
+            <li>Int|Double|Long</li>
+          </ul>
+        </ul>
+      </section>
+      <section>
+        <h2>java.util.function.BiFunction</h2>
+        <pre><code class="language-java">BiFunction<String, String, String> 
+  join = (s, String t) -> s + t;
+  </code></pre>
+      </section>
+      <section>
+        <h2>java.util.function.Function</h2>
+        <ul>
+          <li></li>
+          <li>R apply(T t)</li>
+          <li><V> Function<T,V> compose(Function<? super R,? extends V> after)</li>
+        </ul>
+        <pre class="bullet"><code class="language-java">public void modifyTheValue(int value,
+  Function<Integer, Integer> function){
+    int newValue = function.apply(value);
+}
+Function<Integer, Integer> testFunction = intVal -> {
+  return intVal * 10;
+};
+
+myNumber = 15;
+modifyTheValue(myNumber, val-> val * 10);
+int x = testFunction.apply(myNumber);
+</code></pre>
+      </section>
+      <section>
+        <h2>java.util.function.Supplier</h2>
+        <ul>
+          <li></li>
+          <li>A supplier of objects</li>
+          <li>T get()</li>
+        </ul>
+      </section>
+      <section>
+        <h2>java.util.function.Predicate</h2>
+        <ul>
+          <li></li>
+          <li>Determines if the input object matches some criteria</li>
+          <li>boolean test(T t)</li>
+          <li>Predicate<T> and(Predicate<? super T> p)</li>
+          <li>Predicate<T> negate()</li>
+          <li>Predicate<T> or(Predicate<? super T> p)</li>
+          <li>Predicate<T> xor(Predicate<? super T> p)</li>
+        </ul>
+      </section>
+      <section>
+        <h2>java.util.function.Consumer</h2>
+        <ul>
+          <li></li>
+          <li>Accepts a single input argument and returns no result</li>
+          <li>void accept(T t)</li>
+          <li>Consumer<T> chain(Consumer<? super T> other)</li>
+        </ul>
+      </section>
+      <section>
+        <pre><code class="language-java">public void test(Supplier<Student> supplier,
+  Predicate<Student> predicate,
+  Consumer<Student> consumer) {
+    if (predicate.test(s)) {
+      consumer.accept(supplier.get());
+    }else {
+    };
+}
+
+Consumer<Student> consumer = student -> {
+        System.out.println("Student Consumer: ");
+        System.out.println(student);
+};
+
+Predicate<Student> predicate = student -> 
+          student.getGender() == Person.Sex.MALE;
+          
+Supplier<Student> supplier = () -> { 
+  return new Student("first", "last", Person.Sex.MALE, 25);
+};
+
+test(supplier, consumer, predicate);
+</code></pre>
+      </section>
+      <section>
+        <h2>Optional<T> Class</h2>
+        <ul>
+          <li></li>
+          <li>not in java.util.function</li>
+          <li>but in java.util</li>
+          <li>no if (x != null)</li>
+          <li>no NullPointerException</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Optional<T> Class</h2>
+        <ul>
+          <li></li>
+          <li>Optional.of()</li>
+          <li>Optional.empty()</li>
+          <li>all static methods</li>
+        </ul>
+        <pre class="bullet"><code class="language-java">Optional<String> name = Optional.of("zhangsan");
+Optional empty = Optional.empty();
+
+System.out.println(empty.get());
+// java.util.NoSuchElementException
+</code></pre>
+      </section>
+      <section>
+        <h2>Optional<T> Class</h2>
+        <ul>
+          <li></li>
+          <li>Optional.isPresent</li>
+          <li>Optional.get</li>
+        </ul>
+        <pre class="bullet"><code class="language-java">try {
+  if (name.isPresent()) {
+    System.out.println(name.get());
+  }
+} catch (NoSuchElementException ex) {
+  System.out.println(ex.getMessage());
+}
+</code></pre>
+      </section>
+      <section>
+        <h2>Optional<T> Class</h2>
+        <ul>
+          <li></li>
+          <li>Optional.ifPresent(Consumer<? super T> consumer)</li>
+        </ul>
+        <pre class="bullet"><code class="language-java">name.ifPresent((value) -> {
+  System.out.println("Stuent name is : " + value);
+});
+</code></pre>
+      </section>
+      <section>
+        <h2>Optional<T> Class</h2>
+        <ul>
+          <li></li>
+          <li>Optional.orElse</li>
+          <li>Optional.orElseGet(Supplier<T> other)</li>
+        </ul>
+        <pre class="bullet"><code class="language-java">empty.orElse("There is no value present!");
+name.orElse("There is some value!");
+</code></pre>
+        <pre class="bullet"><code class="language-java">empty.orElseGet(() -> "Default Value");
+name.orElseGet(() -> "Default Value");
+
+</code></pre>
+      </section>
+      <section>
+        <h2>Optional<T> Class</h2>
+        <ul>
+          <li></li>
+          <li>Optional.orElseThrow(Supplier<V> exceptionFactory)</li>
+        </ul>
+        <pre class="bullet"><code class="language-java">class ValueAbsentException extends Throwable {
+  ... ...
+}
+try {
+  empty.orElseThrow(ValueAbsentException::new);
+} catch (Throwable ex) {
+  ... ...
+}
+</code></pre>
+      </section>
+      <section>
+        <h2>Optional<T> Class</h2>
+        <ul>
+          <li></li>
+          <li>OptionalDouble</li>
+          <li>OptionalInt</li>
+          <li>OptionalLong</li>
+        </ul>
+      </section>
+      <section>
+        <h1>Insufficiency</h1>
+        <ul>
+          <li></li>
+          <li>No pattern match</li>
+          <li></li>
+        </ul>
+      </section>
+      <section>
+        <h2>pattern match example
+          <ul>
+            <li><a href="http://d.hatena.ne.jp/nowokay/20131212#1386820115">Java SE 8でパターンマッチを実装する</a></li>
+            <li>Class match, case class math, list match</li>
+          </ul>
+        </h2>
+      </section>
+      <section>
+        <h1>references</h1>
+        <ul>
+          <li></li>
+          <li><a href="http://d.hatena.ne.jp/nowokay/20131231/1388478043">2013年まとめ：今年はJava8の年だった</a></li>
+        </ul>
       </section>
     </article>
     <script src="scripts/scripts.js"></script>
